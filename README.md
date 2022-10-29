@@ -2,15 +2,6 @@
 ## Taskモデル  
 >string :title  
 text :content  
-
-## Taskモデル  
->string :title  
-text :content  
-
-## Userモデル  
->string :user_name    
-string :email  
-string :password_digest  
 ## Userモデル  
 >string :user_name    
 string :email  
@@ -28,4 +19,4 @@ string :password_digest
 
 1. Heloku buildpackを追加する。
 
-1. git push heroku masuter でHerokuにデプロイする。
+1. git push heroku main でHerokuにデプロイする。
