@@ -264,7 +264,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.6)
   rexml
-  rspec-rails (~> 4.0.2)
+  rspec-rails
   sass-rails (>= 6)
   spring
   spring-commands-rspec
