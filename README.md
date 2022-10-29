@@ -1,4 +1,7 @@
-# README
+# README.md
+## Taskモデル  
+>string :title  
+text :content  
 
 ## Taskモデル  
 >string :title  
@@ -8,6 +11,9 @@ text :content
 >string :user_name    
 string :email  
 string :password_digest  
-
+## Userモデル  
+>string :user_name    
+string :email  
+string :password_digest  
 ## Labelモデル
 >string :label_name
