@@ -17,12 +17,24 @@ RSpec.describe 'タスク管理機能', type: :system do
         click_on "登録する"
         expect(page).to have_content '掃除'
         expect(page).to have_content '換気扇の掃除'
+  describe '新規作成機能' do
+    context 'タスクを新規作成した場合' do
+      it '作成したタスクが表示される' do
+				# task = FactoryBot.create(:task)
+				visit new_task_path
+				# binding.irb
+				fill_in "task_title", with: '掃除'
+				fill_in "task_content", with: '換気扇の掃除'
+				click_on "Create Task"
+				expect(page).to have_content '掃除'
+				expect(page).to have_content '換気扇の掃除'
       end
     end
   end
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
+<<<<<<< HEAD
         visit tasks_path
         # save_and_open_page
         # binding.irb
@@ -47,6 +59,24 @@ RSpec.describe 'タスク管理機能', type: :system do
           visit task_path(@task.id)
           # save_and_open_page
           expect(page).to have_content '掃除'
+				task = FactoryBot.create(:task, title: 'task')
+				visit tasks_path
+				# binding.irb
+				# current_path
+				# Task.count
+				# page.html
+				expect(page).to have_content 'task'
+      end
+    end
+  end
+  describe '詳細表示機能' do
+      context '任意のタスク詳細画面に遷移した場合' do
+        it '該当タスクの内容が表示される' do
+          @task = FactoryBot.create(:task, title: '掃除')
+					visit tasks_path(@task.id)
+					# expect(page).to have_content 'タスク詳細画面'
+					expect(page).to have_content '掃除'
+					# expect(page).to have_content content
         end
       end
   end
