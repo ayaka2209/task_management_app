@@ -1,5 +1,22 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  before do
+    Task.delete_all
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+  end
+
+  describe '新規作成機能' do
+    context 'タスクを新規作成した場合' do
+      it '作成したタスクが表示される' do
+        visit new_task_path
+        # binding.irb
+        fill_in "task_title", with: '掃除'
+        fill_in "task_content", with: '換気扇の掃除'
+        click_on "登録する"
+        expect(page).to have_content '掃除'
+        expect(page).to have_content '換気扇の掃除'
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -17,6 +34,31 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
+<<<<<<< HEAD
+        visit tasks_path
+        # save_and_open_page
+        # binding.irb
+        expect(page).to have_content '掃除'
+      end
+    end
+
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        visit tasks_path
+        task_list = all('.task_row')
+        
+        expect(task_list[0]).to have_content '病院に電話' 
+      end
+    end
+  end
+
+  describe '詳細表示機能' do
+      context '任意のタスク詳細画面に遷移した場合' do
+        it '該当タスクの内容が表示される' do
+          @task = FactoryBot.create(:task)
+          visit task_path(@task.id)
+          # save_and_open_page
+          expect(page).to have_content '掃除'
 				task = FactoryBot.create(:task, title: 'task')
 				visit tasks_path
 				# binding.irb
