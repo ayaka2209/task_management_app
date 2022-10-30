@@ -1,4 +1,5 @@
 <h1>タスク詳細画面</h1>
 <p>タイトル: <%= @task.title %></p>
 <p>内容: <%= @task.content %></p>
+<p>終了期限: <%= @task.expired_at %></p>
 <td><%= link_to 'タスク一覧画面に戻る', root_path %></td>
