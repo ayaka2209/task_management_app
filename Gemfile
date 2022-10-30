@@ -30,19 +30,6 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'faker'
   gem 'launchy'
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'rexml'
-  gem 'spring'
-end
-
-group :development do
-  gem 'web-console', '>= 4.1.0'
-  gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
-  gem 'spring-commands-rspec'
-  gem 'faker'
-  gem 'launchy'
 end
 
 group :test do
