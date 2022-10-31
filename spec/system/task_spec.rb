@@ -13,8 +13,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in "task_title", with: '掃除'
         fill_in "task_content", with: '換気扇の掃除'
-        # fill_in "task[task_expired]", with: '002022-10-29'
+        # fill_in "task[task_expired]", with: '2022/10/29'
         click_on "登録する"
+        # click_on "終了期限でソートする"
+
         # binding.irb
         expect(page).to have_content '掃除'
         expect(page).to have_content '換気扇の掃除'
@@ -60,15 +62,17 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
-  # describe '終了期限でソート' do
-  #   content '終了期限でソートするというリンクを押した時' do
-  #     it '終了期限の降順に並び替えられる' do
-  #       # @task = FactoryBot.create
-  #       click_on "終了期限でソートする"
-  #       visit tasks_path
-  #       task_list = all('.task_row')
-  #       expect(task_list[0]).to have_content 'お買い物' 
-  #     end
-  #   end
-  # end
+  describe '終了期限でソート' do
+    context '終了期限でソートするというリンクを押した時' do
+      it '終了期限の降順に並び替えられる' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        FactoryBot.create(:third_task)
+        visit tasks_path
+        click_on "終了期限でソートする"
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content 'お買い物' 
+      end
+    end
+  end
 end

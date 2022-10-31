@@ -18,6 +18,6 @@
     <td><%= link_to 'タスクを削除する', task_path(task.id), method: :delete ,data: { confirm: "本当に削除してもいいですか?" } %></td>
 	</tr>
 <% end %>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 </table>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 <%= link_to "タスク新規登録", new_task_path %>
