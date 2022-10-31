@@ -12,11 +12,9 @@
   
   <div class="field">
     <%= form.label :ステータス %>
-    <%= form.select :search_status, options_for_select(Task.statuses.keys.to_a), {prompt: "選択してください"}, {class: 'task-select'}%>
+    <%= form.select :search_status, options_for_select(Task.statuses.keys.to_a), {prompt: "選択してください"}%>
   </div>
-  <div class="actions">
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
+    <%= form.submit %>
 <% end %>
 
 <table>

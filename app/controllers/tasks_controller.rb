@@ -13,7 +13,17 @@ class TasksController < ApplicationController
   end
 
   def index
-    if params[:sort_expired]
+    if params[:task].present?
+      title = params[:task][:title]
+      status = params[:task][:status]
+      if title.present? && status.present?
+        search_title_and_status = params[:search_title_and_status]
+      elsif title.present?
+        search_title = params[:task][:title]
+        elsif status.present?
+          search_status = params[:task][:status]
+      end
+    elsif
       @tasks = Task.all.sort_expired
     else
       @tasks = Task.all.created_at

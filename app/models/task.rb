@@ -3,8 +3,10 @@ class Task < ApplicationRecord
 	validates :content, presence: true
 
 	scope :sort_expired, -> {order(expired_at: :DESC)}
-	scope :created_at, -> {order(created_at: :DESC)}
-	scope :search_title, -> {where(status: :search_status)}
+	scope :created_at, -> {order(created_at: :ASC)}
+	scope :search_title_and_status, -> {where("title LIKE?", "%#{title}%").where(status:status)}
+	scope :search_title, -> {where("title LIKE?", "%#{title}%")}
+	scope :search_status, -> {where(status:status)}
   enum status: { 未着手: 0, 着手中: 1, 完了:2 }
 	
 
