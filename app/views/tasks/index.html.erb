@@ -1,7 +1,23 @@
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
 
+<h2>Search</h2>
+<%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |form| %>
+<div class="field" >
 
+    <%= form.label :タイトル %>
+    <%= form.text_field :search_title, class: "form-control", style:"width:200px;"%>
+  
+  <br>
+  
+  <div class="field">
+    <%= form.label :ステータス %>
+    <%= form.select :search_status, options_for_select(Task.statuses.keys.to_a), {prompt: "選択してください"}, {class: 'task-select'}%>
+  </div>
+  <div class="actions">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
 
 <table>
   <tr>
