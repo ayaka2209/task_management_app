@@ -70,6 +70,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:third_task)
         visit tasks_path
         click_on "終了期限でソートする"
+        sleep(1)
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'お買い物' 
       end
@@ -84,6 +85,22 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'task[title]', with: '掃除'
       click_on "検索"
       expect(page).to have_content '掃除'
+    end
+  end
+  context 'ステータス検索をした場合' do
+    it "ステータスに完全一致するタスクが絞り込まれる" do
+      select '完了', from: 'task[status]'
+      click_on "検索"
+      expect(page).to have_content '完了'
+    end
+  end
+  context 'タイトルのあいまい検索とステータス検索をした場合' do
+    it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+      fill_in 'task[title]', with: '掃除'
+      select '未着手', from: 'task[status]'
+      click_on "検索"
+      expect(page).to have_content '掃除'
+      expect(page).to have_content '未着手'
     end
   end
 end
