@@ -12,7 +12,7 @@
     <%= form.submit"検索" %>
 <% end %>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>タイトル</th>
     <th>内容</th>
@@ -26,11 +26,11 @@
     <td><%= task.content %></td>
     <td><%= task.expired_at %></td>
     <td><%= task.status %></td>
-    <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-    <td><%= link_to 'タスクを編集する', edit_task_path(task.id) %></td>
-    <td><%= link_to 'タスクを削除する', task_path(task.id), method: :delete ,data: { confirm: "本当に削除してもいいですか?" } %></td>
+    <td><%= link_to '詳細を確認する', task_path(task.id), class: "btn btn-outline-primary" %></td>
+    <td><%= link_to 'タスクを編集する', edit_task_path(task.id), class: "btn btn-outline-secondary" %></td>
+    <td><%= link_to 'タスクを削除する', task_path(task.id), method: :delete ,data: { confirm: "本当に削除してもいいですか?" }, class: "btn btn-outline-success" %></td>
 	</tr>
 <% end %>
 </table>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
-<%= link_to "タスク新規登録", new_task_path %>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "btn btn-danger" %>
+<%= link_to "タスク新規登録", new_task_path, class: "btn btn-warning" %>
