@@ -17,16 +17,18 @@ class TasksController < ApplicationController
       title = params[:task][:title]
       status = params[:task][:status]
       if title.present? && status.present?
-        @tasks = Task.search_title_and_status(title, status)
+        @tasks = Task.page(params[:page]).search_title_and_status(title, status)
       elsif title.present?
-        @tasks = Task.search_title(title)
+        @tasks = Task.page(params[:page]).search_title(title)
       elsif status.present?
-        @tasks = Task.search_status(status)
+        @tasks = Task.page(params[:page]).search_status(status)
       end
     elsif
-      @tasks = Task.all.sort_expired
+      @tasks = Task.page(params[:page]).all.created_at
+    elsif
+      @tasks = Task.page(params[:page]).all.sort_priority
     else
-      @tasks = Task.all.created_at
+      @tasks = Task.page(params[:page]).all.sort_expired
     end
   end
 
@@ -56,6 +58,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status)
+    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status, :priority)
   end
 end

@@ -75,4 +75,15 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+  describe '検索機能'
+  before do
+    visit tasks_path
+  end
+  context 'タイトルであいまい検索した時' do
+    it '検索キーワード含むタスクで絞り込まれる' do
+      fill_in 'task[title]', with: '掃除'
+      click_on "検索"
+      expect(page).to have_content '掃除'
+    end
+  end
 end

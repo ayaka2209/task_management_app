@@ -28,5 +28,10 @@
   <%= form.select :status, Task.statuses.keys.to_a,{prompt: "選択してください"} %>
 </div>
 
+<div class="task_priority">
+  <%= form.label :優先順位 %>
+  <%= form.select :priority, Task.priorities.keys.to_a,{prompt: "選択してください"} %>
+</div>
+
 <%= form.submit %>
 <% end %>
