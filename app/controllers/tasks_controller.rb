@@ -17,11 +17,11 @@ class TasksController < ApplicationController
       title = params[:task][:title]
       status = params[:task][:status]
       if title.present? && status.present?
-        search_title_and_status = params[:search_title_and_status]
+        @tasks = Task.search_title_and_status(title, status)
       elsif title.present?
-        search_title = params[:task][:title]
-        elsif status.present?
-          search_status = params[:task][:status]
+        @tasks = Task.search_title(title)
+      elsif status.present?
+        @tasks = Task.search_status(status)
       end
     elsif
       @tasks = Task.all.sort_expired
@@ -56,6 +56,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :expired_at, :status)
+    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status)
   end
 end
