@@ -23,12 +23,12 @@ class TasksController < ApplicationController
       elsif status.present?
         @tasks = Task.page(params[:page]).search_status(status)
       end
-    elsif
-      @tasks = Task.page(params[:page]).all.created_at
-    elsif
+    elsif params[:sort_priority]
       @tasks = Task.page(params[:page]).all.sort_priority
-    else
+    elsif params[:sort_expired]
       @tasks = Task.page(params[:page]).all.sort_expired
+    else
+      @tasks = Task.page(params[:page]).all.created_at
     end
   end
 

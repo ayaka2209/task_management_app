@@ -36,7 +36,7 @@
 	</tr>
 <% end %>
 </table>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "btn btn-success" %>
-<%= link_to "優先順位でソートする", tasks_path(sort_priority: "true"), class: "btn btn-warning" %>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: true), class: "btn btn-success" %>
+<%= link_to "優先順位でソートする", tasks_path(sort_priority: true), class: "btn btn-warning" %>
 <%= link_to "タスク新規登録", new_task_path, class: "btn btn-danger" %>
 <%= paginate @tasks %>
