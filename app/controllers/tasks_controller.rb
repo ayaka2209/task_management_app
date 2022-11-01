@@ -13,7 +13,23 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    if params[:task].present?
+      title = params[:task][:title]
+      status = params[:task][:status]
+      if title.present? && status.present?
+        @tasks = Task.page(params[:page]).search_title_and_status(title, status)
+      elsif title.present?
+        @tasks = Task.page(params[:page]).search_title(title)
+      elsif status.present?
+        @tasks = Task.page(params[:page]).search_status(status)
+      end
+    elsif params[:sort_priority]
+      @tasks = Task.page(params[:page]).all.sort_priority
+    elsif params[:sort_expired]
+      @tasks = Task.page(params[:page]).all.sort_expired
+    else
+      @tasks = Task.page(params[:page]).all.created_at
+    end
   end
 
   def show
@@ -42,6 +58,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status, :priority)
   end
 end

@@ -14,22 +14,12 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
+gem 'bootstrap', '~> 4.4.1'
+gem 'jquery-rails'
+gem 'kaminari', '~> 0.17.0'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'rexml'
-  gem 'spring'
-end
-
-group :development do
-  gem 'web-console', '>= 4.1.0'
-  gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
-  gem 'spring-commands-rspec'
-  gem 'faker'
-  gem 'launchy'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'rexml'
