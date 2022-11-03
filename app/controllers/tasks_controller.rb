@@ -5,6 +5,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to tasks_path, notice: "タスクを作成しました!"
     else
@@ -13,35 +14,35 @@ class TasksController < ApplicationController
   end
 
   def index
+    # @tasks = current_user.tasks
+    @tasks = current_user.tasks.created_at.page(params[:page])
     if params[:task].present?
       title = params[:task][:title]
       status = params[:task][:status]
       if title.present? && status.present?
-        @tasks = Task.page(params[:page]).search_title_and_status(title, status)
+        @tasks = Task.search_title_and_status(title, status).page(params[:page])
       elsif title.present?
-        @tasks = Task.page(params[:page]).search_title(title)
+        @tasks = Task.search_title(title).page(params[:page])
       elsif status.present?
-        @tasks = Task.page(params[:page]).search_status(status)
+        @tasks = Task.search_status(status).page(params[:page])
       end
-    elsif params[:sort_priority]
-      @tasks = Task.page(params[:page]).all.sort_priority
-    elsif params[:sort_expired]
-      @tasks = Task.page(params[:page]).all.sort_expired
-    else
-      @tasks = Task.page(params[:page]).all.created_at
+      elsif params[:sort_priority]
+      @tasks = Task.all.sort_priority.page(params[:page])
+      elsif params[:sort_expired]
+      @tasks = Task.all.sort_expired.page(params[:page])
     end
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
       redirect_to tasks_path, notice: "タスクを編集しました！"
     else
@@ -50,7 +51,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
     redirect_to tasks_path, notice:"タスクを削除しました！"
   end
