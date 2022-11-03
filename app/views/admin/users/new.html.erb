@@ -3,12 +3,17 @@
 
 <div class="field">
   <%= form.label :名前 %>
-  <%= form.text_field :name %>
+  <%= form.text_field :user_name %>
 </div>
 
 <div class="field">
-  <%= form.label :メールアドレス %>
+  <%= form.label :email %>
   <%= form.text_field :email %>
+</div>
+
+<div class="field">
+  <%= form.label :管理者権限 %>
+  <%= form.check_box :admin %>
 </div>
 
 <div class="field">

@@ -2,5 +2,5 @@
 
 <p>メールアドレス: <%= @user.email %></p>
 
-<%= link_to 'タスク一覧', tasks_path %>
-<%= link_to 'Edit', edit_task_path(@user) %>
+<%= link_to 'タスク一覧', tasks_path, class: "btn btn-outline-primary" %>
+<%= link_to 'Edit', edit_admin_user_path, class: "btn btn-outline-primary" %>
