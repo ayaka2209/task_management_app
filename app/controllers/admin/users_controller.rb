@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  # before_action :require_admin, only: [:new, :create]
+  before_action :require_admin, only: [:new, :create]
 
   def index
     @users = User.select(:id, :user_name, :email, :admin).order(created_at: "DESC")
