@@ -9,5 +9,6 @@
 User.create!(user_name: 'テスト太郎',
               email: 'test@test.com',
               password: 'password'
+              admin: 'true'
             )           
 end
