@@ -35,11 +35,11 @@ RSpec.describe 'ユーザー管理機能', type: :system do
       end
     end
     context 'ユーザーが他人の詳細画面に飛ぼうとする' do
-      it '自分のタスク一覧画面に遷移する' do
+      it 'タスク一覧画面に遷移する' do
         click_on "タスク一覧"
-        visit tasks_path(id:0)
-        expect(page).to have_content 'タスク一覧'
+        visit user_path(5)
         # binding.irb
+        expect(page).to have_content 'あなたはログインしたユーザーではありません'
       end
     end
     context 'ログアウトした場合' do
