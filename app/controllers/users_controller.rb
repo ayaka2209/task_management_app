@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     # byebug
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id
       redirect_to user_path(@user.id)
     else
       render :new
