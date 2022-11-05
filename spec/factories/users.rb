@@ -4,13 +4,13 @@ FactoryBot.define do
     email { 'test@icloud.com' }
     password { 'password' }
     password_confirmation { 'password' }
-    admin { 'true' }
+    admin { true }
   end
   factory :user, class: User do
     user_name { 'テスト花子' }
     email { 'testhanako@icloud.com' }
     password { 'password' }
     password_confirmation { 'password' }
-    admin { 'false' }
+    admin { false }
   end
 end

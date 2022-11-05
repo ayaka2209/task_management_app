@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
-  before_action :destroy_if_only_one_admin, only: [:destroy]
-  before_action :update_if_only_one_admin, only: [:update]
+  # before_action :destroy_if_only_one_admin, only: [:destroy]
+  # before_action :update_if_only_one_admin, only: [:update]
 
   def index
     @users = User.select(:id, :user_name, :email, :admin).order(created_at: "DESC")
@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.tasks.destroy
+    # @user.tasks.destroy
     @user.destroy
     redirect_to admin_users_path, notice: "ユーザーを削除しました"
   end
@@ -56,15 +56,15 @@ class Admin::UsersController < ApplicationController
       redirect_to tasks_path
     end
   end
-  def destroy_if_only_one_admin
-    if User.where(admin: 'true').count == 1 && @user.admin == true
-      redirect_to admin_users_path
-    end
-  end
+  # def destroy_if_only_one_admin
+  #   if User.where(admin: 'true').count == 1 && @user.admin == true
+  #     redirect_to admin_users_path
+  #   end
+  # end
 
-  def update_if_only_one_admin
-    if User.where(admin: 'true').count == 1 && @user.admin == true
-      redirect_to admin_users_path
-    end
-  end
+  # def update_if_only_one_admin
+  #   if User.where(admin: 'true').count == 1 && @user.admin == true
+  #     redirect_to admin_users_path
+  #   end
+  # end
 end
