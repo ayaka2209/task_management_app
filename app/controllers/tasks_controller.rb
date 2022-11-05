@@ -51,7 +51,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = current_user.tasks.find(params[:id])
+    @task = Task.find(params[:id])
     @task.destroy
     redirect_to tasks_path, notice:"タスクを削除しました！"
   end
