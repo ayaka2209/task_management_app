@@ -1,7 +1,17 @@
 <h1>ユーザーの編集</h1>
 <%= link_to "ユーザー一覧に戻る", admin_users_path, class: "btn btn-danger" %>
 
-<%= form_with(model: [:admin,@user], local: true) do |form| %>
+<%= form_with(model:@user, url:admin_user_path(@user.id), local:true) do |form| %>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.user_name %> from being saved:</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+  <% end %>
+  </ul>
+  </div>
+<% end %>
 
 <div class="field">
   <%= form.label :名前 %>

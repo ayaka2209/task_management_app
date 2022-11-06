@@ -1,10 +1,12 @@
 class Admin::UsersController < ApplicationController
-  before_action :require_admin
-  # before_action :destroy_if_only_one_admin, only: [:destroy]
-  # before_action :update_if_only_one_admin, only: [:update]
+  # before_action :require_admin
+  skip_before_action :login_required, only:[:index, :new, :create, :show, :update, :edit, :destroy]
+  skip_before_action :forbid_login_user, only:[:index, :new, :create, :show, :update, :edit, :destroy]
+  skip_before_action :prohibit_access_to_other_users, only:[:index,:new, :create, :show, :update, :edit, :destroy]
+  
 
   def index
-    @users = User.select(:id, :user_name, :email, :admin).order(created_at: "DESC")
+    @users = User.includes(:tasks)
   end
 
   def new
@@ -12,7 +14,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(admin_params)
+    @user = User.new(user_params)
     if @user.save
       redirect_to admin_users_path, notice: "登録しました！"
     else
@@ -47,24 +49,13 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:user_name, :id, :email, :admin, :password, :password_confirmation)
+    params.require(:user).permit(:user_name, :id, :email, :admin, :password, :password_confirmation, :admin)
   end
 
-  def require_admin
-    unless current_user.admin?
-      flash[:danger] = 'あなたは管理者ではありません'
-      redirect_to tasks_path
-    end
-  end
-  # def destroy_if_only_one_admin
-  #   if User.where(admin: 'true').count == 1 && @user.admin == true
-  #     redirect_to admin_users_path
-  #   end
-  # end
-
-  # def update_if_only_one_admin
-  #   if User.where(admin: 'true').count == 1 && @user.admin == true
-  #     redirect_to admin_users_path
+  # def require_admin
+  #   unless current_user.admin?
+  #     flash[:danger] = 'あなたは管理者ではありません'
+  #     redirect_to tasks_path
   #   end
   # end
 end

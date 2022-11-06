@@ -1,4 +1,8 @@
 class TasksController < ApplicationController
+  skip_before_action :forbid_login_user, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+  skip_before_action :prohibit_access_to_other_users, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+  skip_before_action :prohibit_access_except_admin, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+
   def new
     @task = Task.new
   end
@@ -59,6 +63,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status, :priority)
+    params.require(:task).permit(:title, :content, :created_at, :expired_at, :status, :priority, :user_id)
   end
 end
