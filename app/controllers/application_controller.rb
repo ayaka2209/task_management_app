@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
-  
+
   before_action :login_required
   before_action :forbid_login_user
   before_action :prohibit_access_to_other_users
@@ -22,14 +22,14 @@ class ApplicationController < ActionController::Base
 
   def prohibit_access_to_other_users
     if current_user.id != params[:id].to_i
-      flash[:notice] = "アクセスできません"
+      flash[:notice] = "あなたはログインしたユーザーではありません"
       redirect_to tasks_path
     end
   end
 
   def prohibit_access_except_admin
     unless current_user.admin?
-      flash[:notice] = "管理権限がありません"
+      flash[:notice] = "あなたは管理者ではありません"
       redirect_to tasks_path
     end
   end
