@@ -1,0 +1,42 @@
+<h1>ユーザーの編集</h1>
+<%= link_to "ユーザー一覧に戻る", admin_users_path, class: "btn btn-danger" %>
+
+<%= form_with(model:@user, url:admin_user_path(@user.id), local:true) do |form| %>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.user_name %> from being saved:</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+  <% end %>
+  </ul>
+  </div>
+<% end %>
+
+<div class="field">
+  <%= form.label :名前 %>
+  <%= form.text_field :user_name %>
+</div>
+
+<div class="field">
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+</div>
+
+<div class="field">
+  <%= form.label :admin %>
+  <%= form.check_box :admin %>
+</div>
+
+<div class="field">
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+</div>
+
+<div class="field">
+  <%= form.label :password_confirmation %>
+  <%= form.password_field :password_confirmation %>
+</div>
+
+<%= form.submit %>
+<% end %>

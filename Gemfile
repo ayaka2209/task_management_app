@@ -17,6 +17,7 @@ gem 'net-pop'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'kaminari', '~> 0.17.0'
+gem 'bcrypt'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

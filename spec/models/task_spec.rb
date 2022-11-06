@@ -28,7 +28,7 @@ describe 'タスクモデル機能', type: :model do
     let!(:second_task) { FactoryBot.create(:second_task, title: "sample", status: '完了') }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
-        # title_seachはscopeで提示したタイトル検索用メソッドである。メソッド名は任意で構わない。
+        # title_searchはscopeで提示したタイトル検索用メソッドである。メソッド名は任意で構わない。
         expect(Task.search_title('task')).to include(task)
         expect(Task.search_title('task')).not_to include(second_task)
         expect(Task.search_title('task').count).to eq 1

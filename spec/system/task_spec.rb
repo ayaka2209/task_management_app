@@ -1,10 +1,14 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user) }
+  let!(:second_task) { FactoryBot.create(:second_task, user: user) }
+  let!(:third_task) { FactoryBot.create(:third_task, user: user) }
   before do
-    # Task.delete_all
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
+    visit new_session_path
+    fill_in "session[email]",with: 'testhanako@icloud.com'
+    fill_in "session[password]",with: 'password'
+    click_on "Log in"
   end
 
   describe '新規作成機能' do
@@ -13,10 +17,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in "task_title", with: '掃除'
         fill_in "task_content", with: '換気扇の掃除'
-        # fill_in "task[task_expired]", with: '2022/10/29'
         click_on "登録する"
-        # click_on "終了期限でソートする"
-
         # binding.irb
         expect(page).to have_content '掃除'
         expect(page).to have_content '換気扇の掃除'
@@ -26,6 +27,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
+        visit new_session_path
+        fill_in "session[email]",with: 'testhanako@icloud.com'
+        fill_in "session[password]",with: 'password'
+        click_on "Log in"
+        # click_on "タスク一覧"
+        # click_on "タスク新規登録"
         visit tasks_path
         # save_and_open_page
         expect(page).to have_content '掃除'
@@ -33,9 +40,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        visit tasks_path
         task_list = all('.task_row')
         expect(task_list[0]).to have_content '病院に電話' 
+        # binding.irb
       end
     end
   end
@@ -43,12 +50,13 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        @task = FactoryBot.create(:task)
+        @task = FactoryBot.create(:task, user: user)
         visit task_path(@task.id)
-          # save_and_open_page
+        save_and_open_page
         expect(page).to have_content '掃除'
-				task = FactoryBot.create(:task, title: 'task')
+				task = FactoryBot.create(:task, title: 'task', user: user)
 				visit tasks_path
+        sleep(1)
 				expect(page).to have_content 'task'
       end
     end
@@ -56,8 +64,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        @task = FactoryBot.create(:task, title: '掃除')
+        @task = FactoryBot.create(:task, title: '掃除', user: user)
 				visit tasks_path(@task.id)
+        sleep(1)
 				expect(page).to have_content '掃除'
       end
     end
@@ -65,10 +74,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '終了期限でソート' do
     context '終了期限でソートするというリンクを押した時' do
       it '終了期限の降順に並び替えられる' do
-        FactoryBot.create(:task)
-        FactoryBot.create(:second_task)
-        FactoryBot.create(:third_task)
-        visit tasks_path
+        FactoryBot.create(:task, user: user)
+        FactoryBot.create(:second_task, user: user)
+        FactoryBot.create(:third_task, user: user)
         click_on "終了期限でソートする"
         sleep(1)
         task_list = all('.task_row')
