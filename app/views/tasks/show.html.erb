@@ -4,4 +4,12 @@
 <p>終了期限: <%= @task.expired_at %></p>
 <p>ステータス: <%= @task.status %></p>
 <p>優先順位: <%= @task.priority %></p>
+
+<% unless @task.user_id == current_user/id %>
+  <% if @label.present? %>
+    <%= link_to 'ラベルを解除する', label_path(id: @label.id), method::delete, class: 'btn btn-danger' %>
+  <% else %>
+    <%= link_to 'ラベルを設定する', labels_path(task_id: @task.id), method::post, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
 <td><%= link_to 'タスク一覧画面に戻る', root_path %></td>

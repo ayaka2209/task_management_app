@@ -39,6 +39,7 @@ class TasksController < ApplicationController
 
   def show
     @task = current_user.tasks.find(params[:id])
+    @label = current_user.labels.find_by(task_id: @task.id)
   end
 
   def edit

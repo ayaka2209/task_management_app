@@ -10,7 +10,9 @@ class Task < ApplicationRecord
 	scope :search_status, -> (status){where(status:status)}
   enum status: { 未着手: 0, 着手中: 1, 完了:2 }
   enum priority: { 高: 0, 中: 1, 低:2 }
+  enum label: { つける: 0, つけない: 1 }
 	
   belongs_to :user
 	has_many :labels, dependent: :destroy
+	has_many :users, through: :labels
 end
