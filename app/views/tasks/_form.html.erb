@@ -1,4 +1,5 @@
 <%= form_with(model: @task, local: true) do |form| %>
+
 <% if @task.errors.any? %>
     <div id="error_explanation">
       <h2><%= @task.errors.count %>件のエラーがあります。</h2>
@@ -33,9 +34,16 @@
   <%= form.select :priority, Task.priorities.keys.to_a,{prompt: "選択してください"} %>
 </div>
 
-<div class="label_priority">
-  <%= form.label :ラベル %>
-  <%= form.select :priority, Task.labels.keys.to_a,{prompt: "選択してください"} %>
+<div class="tag">
+<% Tag.all.each do |tag| %>
+  <% if action_name == 'new' || action_name == 'create' %>
+    <%= form.check_box :tag_ids, { multiple: true, checked: tag[:checked], disabled: tag[:disabled], include_hidden: false}, tag[:id], "" %>
+    <label><%= tag.name %></label>
+  <% elsif action_name == 'edit' || action_name == 'update' %>
+    <%= form.check_box :tag_ids, { multiple: true, checked: @task.tag_ids.include?(tag.id), disabled: tag[:disabled], include_hidden: false}, tag[:id], "" %>
+    <label><%= tag.name %></label>
+  <% end %>
+<% end %>
 </div>
 
 <%= form.submit %>

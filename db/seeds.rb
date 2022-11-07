@@ -11,4 +11,7 @@ User.create!(user_name: "テスト",
               password: "password",
               admin: 'true'
             )
-                   
+
+5.times do |i|
+  Tag.create!(name: "sample#{i + 1}")
+end
