@@ -24,4 +24,17 @@ RSpec.describe 'ラベル管理機能', type: :system do
       end
     end
   end
+  describe 'ラベル検索機能' do
+    context 'ラベルで検索した場合' do
+      it 'そのラベルがついたタスクが表示される' do
+        visit tasks_path
+        select 'sample5', from: 'task_tag_id'
+        binding.irb
+        click_on "検索"
+        # expect(page).to have_content '掃除'
+        # expect(page).to have_content '換気扇の掃除'
+        expect(page).to have_content 'sample5'
+      end
+    end
+  end
 end
