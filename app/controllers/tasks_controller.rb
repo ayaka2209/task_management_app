@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-  skip_before_action :forbid_login_user, only:[:index, :new, :create, :update, :show, :edit, :destroy]
-  skip_before_action :prohibit_access_to_other_users, only:[:index, :new, :create, :update, :show, :edit, :destroy]
-  skip_before_action :prohibit_access_except_admin, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+  skip_before_action :prohibit_login_user, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+  skip_before_action :require_user, only:[:index, :new, :create, :update, :show, :edit, :destroy]
+  skip_before_action :require_admin, only:[:index, :new, :create, :update, :show, :edit, :destroy]
 
   def new
     @task = Task.new
