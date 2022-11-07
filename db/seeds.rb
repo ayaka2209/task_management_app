@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(user_name: "テスト",
-              email: "test@icloud.com",
+              email: "aiueo@test.com",
               password: "password",
               admin: 'true'
             )
@@ -18,9 +18,10 @@ end
 
 10.times do |n|
   User.create!(
+    user_name: "name#{n+1}",
     email: "user#{n+1}@example.com",
     password: "password" )
- end
+end
 
 #  10.times do |t|
 #   Task.create!(
@@ -34,14 +35,12 @@ end
 #     )
 #  end
 
- User.all.each do |user|
+10.times do |t|
   Task.create!(
-   user_id: user.id,
-   title: "title",
-   content: "content",
-   created_at: "2022/11/07",
-   expired_at: "2022/12/16",
-   status: 1
-   priority: 1
+  user_id: t + 1,
+  title: "title#{t+1}",
+  content: "content",
+  created_at: "2022/11/07",
+  expired_at: "2022/12/16",
   )
- end
+end
