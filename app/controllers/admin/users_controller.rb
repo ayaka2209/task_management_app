@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required, only:[:index, :new, :create, :show, :update, :edit, :destroy]
-  skip_before_action :forbid_login_user, only:[:index, :new, :create, :show, :update, :edit, :destroy]
-  skip_before_action :prohibit_access_to_other_users, only:[:index,:new, :create, :show, :update, :edit, :destroy]
+  skip_before_action :prohibit_login_user, only:[:index, :new, :create, :show, :update, :edit, :destroy]
+  skip_before_action :require_user, only:[:index,:new, :create, :show, :update, :edit, :destroy]
 
   def index
     @users = User.includes(:tasks)

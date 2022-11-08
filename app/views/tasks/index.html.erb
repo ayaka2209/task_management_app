@@ -3,12 +3,15 @@
 <h2>検索</h2>
 <%= form_with(url: tasks_path, scope: :task, method: :get, local: true) do |form| %>
     <%= form.label :タイトル検索 %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title %><br>
     <%= form.label :ステータス %>
     <%= form.select :status, Task.statuses.keys.to_a, include_blank: true %><br>
     <%= form.label :優先順位 %>
     <%= form.select :priority, Task.priorities.keys.to_a, include_blank: true %><br>
+    <%= form.label :ラベル %>
+    <%= form.select("tag_id", Tag.pluck(:name, :id), { include_blank: true }) %><br>
     <%= form.submit"検索" %>
+    <%# <%= form.submit"ラベル検索", name: nil %>
 <% end %>
 
 <table class="table table-striped">
@@ -19,20 +22,28 @@
     <th>終了期限</th>
     <th>ステータス</th>
     <th>優先度</th>
+    <th>ラベル</th>
 	</tr>
 
 <% @tasks.each do |task| %>
-  <tr class="task_row">
-    <td><%= task.user.user_name %></td>
-    <td><%= task.title %></td>
-    <td><%= task.content %></td>
-    <td><%= task.expired_at %></td>
-    <td><%= task.status %></td>
-    <td><%= task.priority %></td>
+  <% if task.user == @current_user %>
+    <tr class="task_row">
+      <td><%= task.user.user_name %></td>
+      <td><%= task.title %></td>
+      <td><%= task.content %></td>
+      <td><%= task.expired_at %></td>
+      <td><%= task.status %></td>
+      <td><%= task.priority %></td>
+      <td>
+      <% task.tags.each do |tag| %>
+          <%= tag.name %>
+      <% end %>
+    </td>
     <td><%= link_to '詳細を確認する', task_path(task.id), class: "btn btn-outline-primary" %></td>
     <td><%= link_to 'タスクを編集する', edit_task_path(task.id), class: "btn btn-outline-secondary" %></td>
     <td><%= link_to 'タスクを削除する', task_path(task.id), method: :delete ,data: { confirm: "本当に削除してもいいですか?" }, class: "btn btn-outline-success" %></td>
 	</tr>
+  <% end %>
 <% end %>
 </table>
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: true), class: "btn btn-success" %>

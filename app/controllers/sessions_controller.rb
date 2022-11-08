@@ -1,8 +1,8 @@
 class SessionsController < ApplicationController
   skip_before_action :login_required, only:[:new, :create, :destroy]
-  skip_before_action :forbid_login_user, only:[:new, :create, :destroy]
-  skip_before_action :prohibit_access_to_other_users, only:[:new, :create, :destroy]
-  skip_before_action :prohibit_access_except_admin, only:[:new, :create, :destroy]
+  skip_before_action :prohibit_login_user, only:[:new, :create, :destroy]
+  skip_before_action :require_user, only:[:new, :create, :destroy]
+  skip_before_action :require_admin, only:[:new, :create, :destroy]
 
   def new
   end

@@ -4,4 +4,10 @@
 <p>終了期限: <%= @task.expired_at %></p>
 <p>ステータス: <%= @task.status %></p>
 <p>優先順位: <%= @task.priority %></p>
-<td><%= link_to 'タスク一覧画面に戻る', root_path %></td>
+<p>ラベル: 
+  <% @task.tags.each do |tag| %>
+    <%= tag.name %>
+  <% end %>
+</p>
+<%= link_to 'タスク編集する', edit_task_path(@task.id), class: 'btn btn-danger' %>
+<td><%= link_to 'タスク一覧画面に戻る', tasks_path, class: 'btn btn-danger' %></td>
