@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   before_action :login_required
-  before_action :forbid_login_user
-  before_action :prohibit_access_to_other_users
-  before_action :prohibit_access_except_admin
+  before_action :prohibit_login_user
+  before_action :require_user
+  before_action :require_admin
 
   private
 
